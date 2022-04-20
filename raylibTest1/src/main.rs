@@ -10,21 +10,22 @@ use rand::Rng;
 const SCREEN_WIDTH: i32 = 720;
 const SCREEN_HEIGHT: i32 = 480;
 // const SLEEP_TIME: u64 = 2;
-const SPEED: f32 = 0.05;
+const PLAYER_SPEED: f32 = 0.05;
+const ENEMY_SPEED: f32 = 0.01;
 
 
-fn update_player(rl: &mut RaylibHandle, rect: &mut Rectangle){
+fn update_player(rl: &RaylibHandle, rect: &mut Rectangle){
     if rl.is_key_down(KEY_W){
-        rect.y = rect.y - SPEED;
+        rect.y = rect.y - PLAYER_SPEED;
     }
     if rl.is_key_down(KEY_S){
-        rect.y = rect.y + SPEED;
+        rect.y = rect.y + PLAYER_SPEED;
     }
     if rl.is_key_down(KEY_D){
-        rect.x = rect.x + SPEED;
+        rect.x = rect.x + PLAYER_SPEED;
     }
     if rl.is_key_down(KEY_A){
-        rect.x = rect.x - SPEED;
+        rect.x = rect.x - PLAYER_SPEED;
     }
 }
 
@@ -35,12 +36,30 @@ fn random_move(position: &mut Vector2) {
     position.y = move_y;
 }
 
+fn move_to_player(player_rect: Rectangle, enemy_rect: &mut Rectangle){
+    if player_rect.x < enemy_rect.x {
+        enemy_rect.x -= ENEMY_SPEED;
+    }
+    else {
+        enemy_rect.x += ENEMY_SPEED;
+    }
+
+    if player_rect.y < enemy_rect.y {
+        enemy_rect.y -= ENEMY_SPEED;
+    }
+
+    else {
+        enemy_rect.y += ENEMY_SPEED;
+    }
+
+}
+
 fn main() {
 
     // constants
     let mut vector = Vector2::new(32.0, 32.0);
     let mut rectangle_vector = Vec::<Rectangle>::new();
-    let mut rectangle = Rectangle::new((SCREEN_WIDTH / 2) as f32 , (SCREEN_HEIGHT / 2) as f32, 32.0, 32.0);
+    let rectangle = Rectangle::new((SCREEN_WIDTH / 2) as f32 , (SCREEN_HEIGHT / 2) as f32, 32.0, 32.0);
     rectangle_vector.push(rectangle);
 
     let (mut rl, thread) = raylib::init()
@@ -64,9 +83,17 @@ fn main() {
         // Updating stuff
         {
             update_player(&mut rl, &mut rectangle_vector[0]);
+            // place a rectangle at the player's mouse
             if rl.is_mouse_button_pressed(MOUSE_LEFT_BUTTON){
                 let mouse_position: Vector2 = rl.get_mouse_position();
-                println!("x: {}, y: {}", mouse_position.x, mouse_position.y)
+                println!("x: {}, y: {}", mouse_position.x, mouse_position.y);
+                let new_rectangle = Rectangle::new(mouse_position.x, mouse_position.y, 16.0, 16.0);
+                rectangle_vector.push(new_rectangle);
+            }
+            if rectangle_vector.len() > 1{
+                for i in 1..rectangle_vector.len(){
+                    move_to_player(rectangle_vector[0],&mut rectangle_vector[i]);
+                }
             }
         }
     } 
