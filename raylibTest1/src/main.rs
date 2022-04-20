@@ -9,7 +9,6 @@ use rand::Rng;
 // global constants
 const SCREEN_WIDTH: i32 = 720;
 const SCREEN_HEIGHT: i32 = 480;
-// const SLEEP_TIME: u64 = 2;
 const PLAYER_SPEED: f32 = 0.05;
 const ENEMY_SPEED: f32 = 0.01;
 
@@ -61,6 +60,7 @@ fn main() {
     let mut rectangle_vector = Vec::<Rectangle>::new();
     let rectangle = Rectangle::new((SCREEN_WIDTH / 2) as f32 , (SCREEN_HEIGHT / 2) as f32, 32.0, 32.0);
     rectangle_vector.push(rectangle);
+    let mut sleep_timer: f32 = 2.0;
 
     let mut hit: bool = false;
 
@@ -77,7 +77,10 @@ fn main() {
                 d.clear_background(Color::WHITE);
                 // Draw Hello, world! and move it to a random spot
                 d.draw_text("Hello, world!", vector.x as i32, vector.y as i32, 20, Color::BLACK);
-                random_move(&mut vector);
+                if sleep_timer <= 0.0 {
+                    random_move(&mut vector);
+                    sleep_timer = 2.0;
+                }
                 // Draw a rectangle and move it with arrows
                 for item in rectangle_vector.iter(){
                     d.draw_rectangle_rec(item, Color::BLUE);
@@ -104,6 +107,8 @@ fn main() {
                         hit = true;
                     }
                 }
+
+                sleep_timer -= rl.get_frame_time();
             }
         }
         // Got hit
