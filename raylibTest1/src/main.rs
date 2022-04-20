@@ -70,7 +70,7 @@ fn main() {
         .build();
 
     while !rl.window_should_close() {
-        if !hit{
+        if !hit {
             // Drawing Stuff
             {
                 let mut d = rl.begin_drawing(&thread);
@@ -82,7 +82,7 @@ fn main() {
                     sleep_timer = 2.0;
                 }
                 // Draw a rectangle and move it with arrows
-                for item in rectangle_vector.iter(){
+                for item in rectangle_vector.iter() {
                     d.draw_rectangle_rec(item, Color::BLUE);
                 }
             }
@@ -90,19 +90,19 @@ fn main() {
             {
                 update_player(&mut rl, &mut rectangle_vector[0]);
                 // place a rectangle at the player's mouse
-                if rl.is_mouse_button_pressed(MOUSE_LEFT_BUTTON){
+                if rl.is_mouse_button_pressed(MOUSE_LEFT_BUTTON) {
                     let mouse_position: Vector2 = rl.get_mouse_position();
                     println!("x: {}, y: {}", mouse_position.x, mouse_position.y);
                     let new_rectangle = Rectangle::new(mouse_position.x, mouse_position.y, 16.0, 16.0);
                     rectangle_vector.push(new_rectangle);
                 }
-                if rectangle_vector.len() > 1{
-                    for i in 1..rectangle_vector.len(){
+                if rectangle_vector.len() > 1 {
+                    for i in 1..rectangle_vector.len() {
                         move_to_player(rectangle_vector[0],&mut rectangle_vector[i]);
                     }
                 }
                 // Check for collisions and end the game if there is one
-                for i in 1..rectangle_vector.len(){
+                for i in 1..rectangle_vector.len() {
                     if rectangle_vector[0].check_collision_recs(&rectangle_vector[i]){
                         hit = true;
                     }
