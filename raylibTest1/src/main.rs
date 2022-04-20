@@ -62,39 +62,56 @@ fn main() {
     let rectangle = Rectangle::new((SCREEN_WIDTH / 2) as f32 , (SCREEN_HEIGHT / 2) as f32, 32.0, 32.0);
     rectangle_vector.push(rectangle);
 
+    let mut hit: bool = false;
+
     let (mut rl, thread) = raylib::init()
         .size(SCREEN_WIDTH, SCREEN_HEIGHT)
         .title("Hello, World")
         .build();
 
     while !rl.window_should_close() {
-        // Drawing Stuff
-        {
-            let mut d = rl.begin_drawing(&thread);
-            d.clear_background(Color::WHITE);
-            // Draw Hello, world! and move it to a random spot
-            d.draw_text("Hello, world!", vector.x as i32, vector.y as i32, 20, Color::BLACK);
-            random_move(&mut vector);
-            // Draw a rectangle and move it with arrows
-            for item in rectangle_vector.iter(){
-                d.draw_rectangle_rec(item, Color::BLUE);
-            }
-        }
-        // Updating stuff
-        {
-            update_player(&mut rl, &mut rectangle_vector[0]);
-            // place a rectangle at the player's mouse
-            if rl.is_mouse_button_pressed(MOUSE_LEFT_BUTTON){
-                let mouse_position: Vector2 = rl.get_mouse_position();
-                println!("x: {}, y: {}", mouse_position.x, mouse_position.y);
-                let new_rectangle = Rectangle::new(mouse_position.x, mouse_position.y, 16.0, 16.0);
-                rectangle_vector.push(new_rectangle);
-            }
-            if rectangle_vector.len() > 1{
-                for i in 1..rectangle_vector.len(){
-                    move_to_player(rectangle_vector[0],&mut rectangle_vector[i]);
+        if !hit{
+            // Drawing Stuff
+            {
+                let mut d = rl.begin_drawing(&thread);
+                d.clear_background(Color::WHITE);
+                // Draw Hello, world! and move it to a random spot
+                d.draw_text("Hello, world!", vector.x as i32, vector.y as i32, 20, Color::BLACK);
+                random_move(&mut vector);
+                // Draw a rectangle and move it with arrows
+                for item in rectangle_vector.iter(){
+                    d.draw_rectangle_rec(item, Color::BLUE);
                 }
             }
+            // Updating stuff
+            {
+                update_player(&mut rl, &mut rectangle_vector[0]);
+                // place a rectangle at the player's mouse
+                if rl.is_mouse_button_pressed(MOUSE_LEFT_BUTTON){
+                    let mouse_position: Vector2 = rl.get_mouse_position();
+                    println!("x: {}, y: {}", mouse_position.x, mouse_position.y);
+                    let new_rectangle = Rectangle::new(mouse_position.x, mouse_position.y, 16.0, 16.0);
+                    rectangle_vector.push(new_rectangle);
+                }
+                if rectangle_vector.len() > 1{
+                    for i in 1..rectangle_vector.len(){
+                        move_to_player(rectangle_vector[0],&mut rectangle_vector[i]);
+                    }
+                }
+                // Check for collisions and end the game if there is one
+                for i in 1..rectangle_vector.len(){
+                    if rectangle_vector[0].check_collision_recs(&rectangle_vector[i]){
+                        hit = true;
+                    }
+                }
+            }
+        }
+        // Got hit
+        else {
+            let mut d = rl.begin_drawing(&thread);
+            d.clear_background(Color::WHITE);
+            d.draw_text("Game over", SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2, 20, Color::BLACK);
+            
         }
     } 
 }
