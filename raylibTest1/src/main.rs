@@ -86,6 +86,7 @@ fn main() {
                     d.draw_rectangle_rec(item, Color::BLUE);
                 }
             }
+
             // Updating stuff
             {
                 update_player(&mut rl, &mut rectangle_vector[0]);
