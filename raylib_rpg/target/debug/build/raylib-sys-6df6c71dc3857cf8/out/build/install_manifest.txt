@@ -1,0 +1,9 @@
+/home/hananguyen/Downloads/RustTest/raylibRPG/target/debug/build/raylib-sys-6df6c71dc3857cf8/out/lib/libraylib.a
+/home/hananguyen/Downloads/RustTest/raylibRPG/target/debug/build/raylib-sys-6df6c71dc3857cf8/out/include/raylib.h
+/home/hananguyen/Downloads/RustTest/raylibRPG/target/debug/build/raylib-sys-6df6c71dc3857cf8/out/include/rlgl.h
+/home/hananguyen/Downloads/RustTest/raylibRPG/target/debug/build/raylib-sys-6df6c71dc3857cf8/out/include/physac.h
+/home/hananguyen/Downloads/RustTest/raylibRPG/target/debug/build/raylib-sys-6df6c71dc3857cf8/out/include/raymath.h
+/home/hananguyen/Downloads/RustTest/raylibRPG/target/debug/build/raylib-sys-6df6c71dc3857cf8/out/include/raudio.h
+/home/hananguyen/Downloads/RustTest/raylibRPG/target/debug/build/raylib-sys-6df6c71dc3857cf8/out/lib/pkgconfig/raylib.pc
+/home/hananguyen/Downloads/RustTest/raylibRPG/target/debug/build/raylib-sys-6df6c71dc3857cf8/out/lib/cmake/raylib/raylib-config-version.cmake
+/home/hananguyen/Downloads/RustTest/raylibRPG/target/debug/build/raylib-sys-6df6c71dc3857cf8/out/lib/cmake/raylib/raylib-config.cmake
