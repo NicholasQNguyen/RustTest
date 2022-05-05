@@ -7,7 +7,7 @@
 use teensy4_bsp as bsp;
 use teensy4_panic as _;
 use imxrt_hal::{
-    gpio::{Input, GPIO},
+    gpio::{Input, Output, GPIO},
     iomuxc::{configure, gpio::Pin, Config, Hysteresis, PullKeeper},
 };
 use core::time::Duration;
@@ -28,6 +28,11 @@ fn configure_switch<P: Pin>(mut switch_pin: P) -> GPIO<P, Input> {
     GPIO::new(switch_pin)
 }
 
+fn configure_switch_output<P: Pin>(switch_pin: P) -> GPIO<P, Output> {
+    let pin = configure_switch(switch_pin);
+    pin.output()
+}
+
 #[cortex_m_rt::entry]
 fn main() -> ! {
     let mut periphs = bsp::Peripherals::take().unwrap();
@@ -40,6 +45,7 @@ fn main() -> ! {
     // bad happened.)
     let mut led = bsp::configure_led(pins.p13);
     let flame_sensor = configure_switch(pins.p14);
+    let led_out = configure_switch_output(pins.p15);
     led.set();
 
     // Prepare the ARM clock to run at ARM_HZ.
