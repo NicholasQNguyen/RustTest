@@ -6,15 +6,10 @@
 
 use teensy4_bsp as bsp;
 use teensy4_panic as _;
-// use imxrt_iomuxc as iomuxc;
-// use imxrt_iomuxc::adc::Pin;
-use cortex_m_rt::entry;
-use embedded_hal::digital::v2::OutputPin;
 use imxrt_hal::{
     gpio::{Input, GPIO},
     iomuxc::{configure, gpio::Pin, Config, Hysteresis, PullKeeper},
 };
-use teensy4_bsp::{configure_led, pins::t40, Peripherals};
 use core::time::Duration;
 
 mod logging;
@@ -80,9 +75,9 @@ fn main() -> ! {
 
     timer.set_enable(true);
     loop {
+        if flame_sensor.is_set() {
         led.toggle();
-        log::info!("Hello world");
-
+        }
         while !timer.output_compare_status(GPT_OCR).is_set() {}
         timer.output_compare_status(GPT_OCR).clear();
     }
