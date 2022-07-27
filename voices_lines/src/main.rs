@@ -5,28 +5,50 @@ use std::io;
 
 fn main() -> io::Result<()> {
     let mut file_name: String = String::new();
-//     let mut file_name: String = "1".to_string();
-    let extention: &str = ".txt";
+    let mut placeholder: String = String::new();
+    let mut loop_boolean: bool = true;
 
-    println!("1 for Study Drugs");
-    println!("2 for Itchy Ike");
-    io::stdin()
-        .read_line(&mut file_name)
-        .expect("Failed to read line");
+    while loop_boolean {
 
-    // file_name.push_str(extention);
+        println!("1 for Study Drugs");
+        println!("2 for Itchy Ike");
+        io::stdin()
+            .read_line(&mut file_name)
+            .expect("Failed to read line");
 
-    file_name.pop();
+        // file_name.push_str(extention);
 
-    println!("File name: {}", file_name);
+        file_name.pop();
 
-    let contents = File::open(file_name)
-        .expect("Error reading file");
+        println!("File name: {}", file_name);
 
-    let buf_reader = BufReader::new(contents);
+        let contents = File::open(&file_name)
+            .expect("Error reading file");
 
-    for line in buf_reader.lines() {
-        println!("{}", line.unwrap());
+        let buf_reader = BufReader::new(contents);
+
+        for line in buf_reader.lines() {
+            println!("{}", line.unwrap());
+            io::stdin()
+                .read_line(&mut placeholder)
+                .expect("Failed to read line");
+        }
+
+        let mut repeat = "n".to_string();
+
+        println!("Would you like to repeat (y/n)?");
+        io::stdin()
+            .read_line(&mut repeat)
+            .expect("Failed to read line");
+/*
+        if repeat.pop().unwrap() == "y".to_string() {
+            loop_boolean = true;
+        }
+        else {
+            loop_boolean = false;
+        }
+*/
     }
+    
     Ok(())
 }
