@@ -3,12 +3,14 @@ use std::io::BufReader;
 use std::fs::File;
 use std::io;
 
-fn main() -> io::Result<()> {
-    let mut file_name: String = String::new();
+fn main(){
     let mut placeholder: String = String::new();
-    let mut loop_boolean: bool = true;
+    // let mut file_name: String = String::new();
 
-    while loop_boolean {
+    loop {
+
+        let mut file_name = "".to_string();
+        // file_name = "".to_string();
 
         println!("1 for Study Drugs");
         println!("2 for Itchy Ike");
@@ -16,11 +18,7 @@ fn main() -> io::Result<()> {
             .read_line(&mut file_name)
             .expect("Failed to read line");
 
-        // file_name.push_str(extention);
-
         file_name.pop();
-
-        println!("File name: {}", file_name);
 
         let contents = File::open(&file_name)
             .expect("Error reading file");
@@ -34,21 +32,18 @@ fn main() -> io::Result<()> {
                 .expect("Failed to read line");
         }
 
-        let mut repeat = "n".to_string();
+        let mut repeat = String::new();
 
-        println!("Would you like to repeat (y/n)?");
+        println!("Would you like to quit?");
         io::stdin()
             .read_line(&mut repeat)
             .expect("Failed to read line");
-/*
-        if repeat.pop().unwrap() == "y".to_string() {
-            loop_boolean = true;
+
+        if repeat.trim() == "y".to_string() {
+            break
         }
         else {
-            loop_boolean = false;
         }
-*/
+
     }
-    
-    Ok(())
 }
