@@ -1,8 +1,7 @@
-#[derive(Debug)]
 pub struct Rule {
-    state: i32,
-    symbol: String,
-    state_2: i32
+    pub state: i32,
+    pub symbol: String,
+    pub state_2: i32
 }
 
 impl std::fmt::Display for Rule {
@@ -12,22 +11,27 @@ impl std::fmt::Display for Rule {
 }
 
 pub struct DFA {
-    states: Vec<i32>,
-    alphabet: String,
-    transition_function: Vec<Rule>,
-    start_state: i32,
-    acceptable_states: Vec<i32>
+    pub states: Vec<i32>,
+    pub alphabet: String,
+    pub transition_function: [Rule; 1],
+    pub start_state: i32,
+    pub acceptable_states: Vec<i32>
 }
 
 impl DFA {
     // Constructor Method
-    pub fn new() -> Self {
+    // TODO have it accept some input instead of just generating the stuff
+    pub fn new(states: Vec<i32>,
+               alphabet: String,
+               transition_function: [Rule; 1],
+               start_state: i32,
+               acceptable_states: Vec<i32>) -> Self {
         let test_vec = vec!(0);
         let test_vec2 = vec!(1);
         let test_rule = Rule{state: 1,
                              symbol:  "Hello".to_string(),
                              state_2: 2};
-        let rule_vec = vec!(test_rule);
+        let rule_vec = [test_rule];
         Self {states: test_vec,
               alphabet: "Hello".to_string(),
               transition_function: rule_vec,
