@@ -26,17 +26,11 @@ impl DFA {
                transition_function: [Rule; 1],
                start_state: i32,
                acceptable_states: Vec<i32>) -> Self {
-        let test_vec = vec!(0);
-        let test_vec2 = vec!(1);
-        let test_rule = Rule{state: 1,
-                             symbol:  "Hello".to_string(),
-                             state_2: 2};
-        let rule_vec = [test_rule];
-        Self {states: test_vec,
-              alphabet: "Hello".to_string(),
-              transition_function: rule_vec,
-              start_state: 1,
-              acceptable_states: test_vec2}
+        Self {states: states,
+              alphabet: alphabet,
+              transition_function: transition_function,
+              start_state: start_state,
+              acceptable_states: acceptable_states}
     }
 
     // Returns true is DFA accepts the string
