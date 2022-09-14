@@ -36,12 +36,13 @@ impl DFA {
 
     // Returns true is DFA accepts the string
     pub fn accept(&self, question: String) -> bool {
-        if question.trim() == "Yes" {
-            true
-        }
-        else {
-            false
-        }
+        for state in self.acceptable_states.iter() {
+            if question.trim().parse::<i32>().unwrap() == *state {
+                return true;
+            }
+         }
+
+        return false;
     }
 }
 

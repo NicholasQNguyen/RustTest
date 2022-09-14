@@ -17,11 +17,15 @@ fn main() {
                         1,
                         [2].to_vec());
     println!("{}", dfa1);
+
+    // Unit Tests
     // Will panic if don't pass unit tests
-    assert_eq!(true, dfa1.accept("Yes".to_string()));
+    assert_eq!(true, dfa1.accept("2".to_string()));
     assert_eq!([1].to_vec(), dfa1.states);
     assert_eq!("Hello".to_string(), dfa1.alphabet);
     assert_eq!(1, dfa1.start_state);
     assert_eq!(rule_array2, dfa1.transition_function);
     assert_eq!([2].to_vec(), dfa1.acceptable_states);
+
+    println!("Got through the tests, boss!");
 }
