@@ -21,6 +21,7 @@ fn main() {
     // Unit Tests
     // Will panic if don't pass unit tests
     assert_eq!(true, dfa1.accept("2".to_string()));
+    assert_eq!(false, dfa1.accept("1".to_string()));
     assert_eq!([1].to_vec(), dfa1.states);
     assert_eq!("Hello".to_string(), dfa1.alphabet);
     assert_eq!(1, dfa1.start_state);

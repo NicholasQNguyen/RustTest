@@ -21,7 +21,6 @@ pub struct DFA {
 
 impl DFA {
     // Constructor Method
-    // TODO have it accept some input instead of just generating the stuff
     pub fn new(states: Vec<i32>,
                alphabet: String,
                transition_function: [Rule; 1],
