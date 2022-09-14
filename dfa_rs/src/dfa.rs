@@ -7,11 +7,10 @@ pub struct Rule {
 
 impl std::fmt::Display for Rule {
     fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
-        write!(f, "[State: {}, Symbol: {}, State 2 {}]", self.state, self.symbol, self.state_2)
+        write!(f, "[State: {}, Symbol: {}, State 2: {}]", self.state, self.symbol, self.state_2)
     }
 }
 
-// #[derive(Debug)]
 pub struct DFA {
     states: Vec<i32>,
     alphabet: String,
@@ -21,16 +20,14 @@ pub struct DFA {
 }
 
 impl DFA {
+    // Constructor Method
     pub fn new() -> Self {
-        let mut test_vec = Vec::new();
-        test_vec.push(0);
-        let mut test_vec2 = Vec::new();
-        test_vec2.push(1);
+        let test_vec = vec!(0);
+        let test_vec2 = vec!(1);
         let test_rule = Rule{state: 1,
                              symbol:  "Hello".to_string(),
                              state_2: 2};
-        let mut rule_vec = Vec::new();
-        rule_vec.push(test_rule);
+        let rule_vec = vec!(test_rule);
         Self {states: test_vec,
               alphabet: "Hello".to_string(),
               transition_function: rule_vec,
@@ -38,6 +35,7 @@ impl DFA {
               acceptable_states: test_vec2}
     }
 
+    // Returns true is DFA accepts the string
     pub fn accept(&self, question: String) -> bool {
         if question.trim() == "Yes" {
             true
@@ -48,6 +46,7 @@ impl DFA {
     }
 }
 
+// Fancy formatting for printing
 impl std::fmt::Display for DFA {
     fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
         write!(f, 
