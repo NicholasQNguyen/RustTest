@@ -1,3 +1,4 @@
+#[derive(Debug, PartialEq)]
 pub struct Rule {
     pub state: i32,
     pub symbol: String,
