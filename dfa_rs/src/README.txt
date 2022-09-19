@@ -1,6 +1,5 @@
 How to run test cases.
 
-1) Run "cargo r"
+1) Run "cargo test"
 
-If you get the message "Got through the tests, boss!", then the 
-tests were successful!
+It should run 7 tests that all have ok in green.
