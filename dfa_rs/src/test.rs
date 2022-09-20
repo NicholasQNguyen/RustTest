@@ -1,14 +1,15 @@
 #[cfg(test)]
 mod tests {
-    use crate::dfa::dfa::DFA;
-    use crate::dfa::dfa::Rule;
+    use crate::dfa::Dfa;
+    use crate::dfa::Rule;
+
     // Run this before each test to build the things we're testing
-    pub fn init() -> DFA {
+    pub fn init() -> Dfa {
         let test_rule = Rule{state: 1,
                              symbol:  "Hello".to_string(),
                              state_2: 2};
         let rule_array: [Rule; 1] = [test_rule; 1];
-        DFA::new([1].to_vec(),
+        Dfa::new([1].to_vec(),
                  "Hello".to_string(),
                   rule_array,
                   1,
