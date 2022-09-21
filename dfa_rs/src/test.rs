@@ -6,18 +6,18 @@ use crate::dfa::Rule;
 // Run this before each test to build the things we're testing
 pub fn init() -> Dfa {
     // DFA that accepts strings of even length
-    let one_to_two_a = Rule{state: 1,
+    let one_to_two_a = Rule{start_state: 1,
                             symbol:  "a".to_string().chars().nth(0).unwrap(),
-                            state_2: 2};
-    let one_to_two_b = Rule{state: 1,
+                            end_state: 2};
+    let one_to_two_b = Rule{start_state: 1,
                             symbol:  "b".to_string().chars().nth(0).unwrap(),
-                            state_2: 2};
-    let two_to_one_a = Rule{state: 1,
+                            end_state: 2};
+    let two_to_one_a = Rule{start_state: 2,
                             symbol:  "a".to_string().chars().nth(0).unwrap(),
-                            state_2: 1};
-    let two_to_one_b = Rule{state: 1,
+                            end_state: 1};
+    let two_to_one_b = Rule{start_state: 2,
                             symbol:  "b".to_string().chars().nth(0).unwrap(),
-                            state_2: 1};
+                            end_state: 1};
     let rule_array: [Rule; 4] = [one_to_two_a,
                                  one_to_two_b,
                                  two_to_one_a,
@@ -33,12 +33,14 @@ pub fn init() -> Dfa {
 #[test]
 fn test_accept_true () {
     let dfa = init();
+    println!("TRUE");
     assert_eq!(true, dfa.accept("aa".to_string()));
 }
 
 #[test]
 fn test_accept_false () {
     let dfa = init();
+    println!("FALSE");
     assert_eq!(false, dfa.accept("aaa".to_string()));
 }
 
@@ -59,22 +61,22 @@ fn test_dfa_alphabet () {
 #[test]
 fn test_dfa_transition_function () {
     let dfa = init();
-    let one_to_two_a2 = Rule{state: 1,
+    let one_to_two_a = Rule{start_state: 1,
                             symbol:  "a".to_string().chars().nth(0).unwrap(),
-                            state_2: 2};
-    let one_to_two_b2 = Rule{state: 1,
+                            end_state: 2};
+    let one_to_two_b = Rule{start_state: 1,
                             symbol:  "b".to_string().chars().nth(0).unwrap(),
-                            state_2: 2};
-    let two_to_one_a2 = Rule{state: 1,
+                            end_state: 2};
+    let two_to_one_a = Rule{start_state: 2,
                             symbol:  "a".to_string().chars().nth(0).unwrap(),
-                            state_2: 1};
-    let two_to_one_b2 = Rule{state: 1,
+                            end_state: 1};
+    let two_to_one_b = Rule{start_state: 2,
                             symbol:  "b".to_string().chars().nth(0).unwrap(),
-                            state_2: 1};
-    let compared_array: [Rule; 4] = [one_to_two_a2,
-                                     one_to_two_b2,
-                                     two_to_one_a2,
-                                     two_to_one_b2];
+                            end_state: 1};
+   let compared_array: [Rule; 4] = [one_to_two_a,
+                                     one_to_two_b,
+                                     two_to_one_a,
+                                     two_to_one_b];
     let rule_array2: [Rule; 4] = compared_array;
     assert_eq!(rule_array2, dfa.transition_function);
 }

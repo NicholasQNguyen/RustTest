@@ -2,14 +2,14 @@ use std::char;
 
 #[derive(Debug, PartialEq, Eq)]
 pub struct Rule {
-    pub state: i32,
+    pub start_state: i32,
     pub symbol: char,
-    pub state_2: i32
+    pub end_state: i32
 }
 
 impl std::fmt::Display for Rule {
     fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
-        write!(f, "[State: {}, Symbol: {}, State 2: {}]", self.state, self.symbol, self.state_2)
+        write!(f, "[State: {}, Symbol: {}, State 2: {}]", self.start_state, self.symbol, self.end_state)
     }
 }
 
@@ -37,12 +37,20 @@ impl Dfa {
 
     // Returns true is Dfa accepts the string
     pub fn accept(&self, question: String) -> bool {
-        let current_state = self.start_state;
+        let mut current_state = self.start_state;
         for character in question.chars() {
             for i in 0..self.transition_function.len() {
                 if character == self.transition_function[i].symbol {
-                    println!("Hi");
+                    if current_state == self.transition_function[i].start_state {
+                        current_state = self.transition_function[i].end_state;
+                        break;
+                    }
                 }
+            }
+        }
+        for state in &self.acceptable_states {
+            if current_state == *state {
+                return true;
             }
         }
         false
