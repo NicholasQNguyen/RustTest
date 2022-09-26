@@ -18,10 +18,10 @@ pub fn init() -> Dfa {
     let two_to_one_b = Rule{start_state: 2,
                             symbol:  "b".to_string().chars().nth(0).unwrap(),
                             end_state: 1};
-    let rule_array: [Rule; 4] = [one_to_two_a,
-                                 one_to_two_b,
-                                 two_to_one_a,
-                                 two_to_one_b];
+    let rule_array = [one_to_two_a,
+                      one_to_two_b,
+                      two_to_one_a,
+                      two_to_one_b];
     Dfa::new([1, 2].to_vec(),
              "a, b".to_string(),
               rule_array,
